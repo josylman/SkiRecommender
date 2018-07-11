@@ -1,0 +1,39 @@
+{% extends "layout2.html" %}
+{% block content %}
+<head>
+<link
+    href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.16.min.css"
+    rel="stylesheet" type="text/css">
+<link
+    href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.16.min.css"
+    rel="stylesheet" type="text/css">
+
+<script src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.16.min.js"></script>
+<script src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.16.min.js"></script>
+
+</head>
+<body>
+<H1>Recommended Ski Resorts</H1>
+<H3>Congrats! You matched!</H3>
+<form action="/recommendations">
+<input type="hidden" id="postId" name="resort" value="{{resort}}">
+
+</select>
+<select name="feature_name">
+    {% for feature in feature_names %}
+        {% if feature == current_feature_name %}
+            <option selected value="{{ feature }}">{{ feature }}</option>
+        {% else %}
+            <option value="{{ feature }}">{{ feature }}</option>
+        {% endif %}
+    {% endfor %}
+</select>
+<input type="submit">
+</form>
+
+{{ script|safe }}
+{{ div|safe }}
+
+</body>
+</html>
+{% endblock content  %}

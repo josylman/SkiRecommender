@@ -1,0 +1,27 @@
+{% extends "layout2.html" %}
+{% block content %}
+    <h1>Top 10 Ski Resorts<h1>
+<div class=page>
+  <div class=metanav>
+
+    <h4>
+      Please enter your favorite ski resort.
+
+      <h5>
+    <form id='userinfoform_ski' method='post' action='/skiform' >
+      <p>
+        Ski Resort: <input type='text' name='name_skiresort' />
+      </p>
+      <p>
+    <input type='submit' value='Submit' />
+      </p>
+    </form>
+     </h5>
+    </h4>
+
+
+
+  </div>
+</div>
+</html>
+{% endblock content  %}
