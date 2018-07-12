@@ -40,6 +40,7 @@ df_with_dummies = pd.get_dummies(df, columns=['Continent', 'Country'])
 
 # Remove columns that are not needed
 df_removal = df_with_dummies.drop(['Currency', 'Unnamed: 0', 'ResortName'], axis=1)
+df_withnames = df_with_dummies.drop(['Currency', 'Unnamed: 0'], axis=1)
 
 # Convert to an array
 df_array = df_removal.values
@@ -86,6 +87,35 @@ def get_recommendations(resort, cosine_sim=cosine_sim):
     return names
 
 
+def get_recommendations_list(resort, cosine_sim=cosine_sim):
+    # Convert resort to be in format
+    resort = resort.lower()
+    resort = resort.replace(" ", "-")
+
+    # Get the index of the movie that matches the title
+    idx = indices[resort]
+
+    # Get the pairwsie similarity scores of all movies with that movie
+    sim_scores = list(enumerate(cosine_sim[idx]))
+
+    # Sort the movies based on the similarity scores
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+    # Get the scores of the 10 most similar movies
+    sim_scores = sim_scores[1:11]
+
+    # Get the movie indices
+    ski_indices = [i[0] for i in sim_scores]
+
+    # the top 10 most similar movies
+    names = df_withnames.iloc[ski_indices, 0]
+    names = names.str.title()
+    names = names.replace('-', ' ', regex=True)
+    names = names.tolist()
+
+    return names
+
+
 feature_names = ['Altitude', 'Ski_resort_size', 'Child', 'Youth', 'Easy', 'Intermediate', 'Difficult', 'Snowreliability', 'Variety', 'Food', 'Accommodations']
 
 
@@ -129,6 +159,7 @@ def indexplotter():
     resort = request.args.get('resort')
     # Get the resort data
     smalldata = get_recommendations(resort)
+    listdata = get_recommendations_list(resort)
 
     # Determine selected feature
     current_feature_name = request.args.get("feature_name")
@@ -140,7 +171,7 @@ def indexplotter():
 
     # Embed plot into HTML via Flask Render
     script, div = components(plot)
-    return render_template("plotter.html", script=script, div=div, resort=resort, current_feature_name=current_feature_name, feature_names=feature_names)
+    return render_template("plotter.html", script=script, div=div, resort=resort, current_feature_name=current_feature_name, feature_names=feature_names, listdata=listdata)
 
 
 if __name__ == '__main__':
