@@ -32,7 +32,26 @@ class CenteringTransformer(sk.base.BaseEstimator, sk.base.TransformerMixin):
         return self
 
     def transform(self, X):
+        X = X.copy()
         return X - self.means
+
+
+class ColumnWeightTransformer(base.BaseEstimator, base.TransformerMixin):
+
+    def __init__(self, col_names):
+        self.col_names = col_names  # We will need these in transform()
+
+    def fit(self, X, y=None):
+        # This transformer doesn't need to learn anything about the data,
+        # so it can just return self without any further processing
+        return self
+
+    def transform(self, X):
+        X = X.copy()
+        for name in self.col_names:
+            X.loc[:, name] *= 100
+
+        return X
 
 
 # Deal with the text data
@@ -42,27 +61,52 @@ df_with_dummies = pd.get_dummies(df, columns=['Continent', 'Country'])
 df_removal = df_with_dummies.drop(['Currency', 'Unnamed: 0', 'ResortName'], axis=1)
 df_withnames = df_with_dummies.drop(['Currency', 'Unnamed: 0'], axis=1)
 
-# Convert to an array
-df_array = df_removal.values
-
 # Deal with numeric data
 ct = CenteringTransformer()
-df_norm = ct.fit_transform(df_array)
+df_norm = ct.fit_transform(df_removal)
 
-# compute cosine similarity
-cosine_sim = cosine_similarity(df_norm)
 
 # Construct reverse map of indices and ski resort names
 indices = pd.Series(df.index, index=df['ResortName']).drop_duplicates()
 
-# Make a function to get recommendations
+
+# Make a function to get cosine similarities
+def get_cosinesim(df_norm, price, snow, apres, location):
+    # All possible variables to be weighted
+    print(location)
+    country_var = [col for col in df_norm if col.startswith('Country_')]
+    apres_var = ['Food', 'Accommodations']
+    price_var = ['Adult']
+    snow_var = ['Variety', 'Snowreliability', 'Slopepreparation']
+    priorities = []
+    if location == "True":
+        priorities.extend(country_var)
+    if apres == "True":
+        priorities.extend(apres_var)
+    if price == "True":
+        priorities.extend(price_var)
+    if snow == "True":
+        priorities.extend(snow_var)
+    print(priorities)
+    cwt = ColumnWeightTransformer(priorities)
+    df_spec = cwt.fit_transform(df_norm)
+
+    # Convert to an array
+    df_array = df_spec.values
+
+    # compute cosine similarity
+    cosine_sim = cosine_similarity(df_array)
+
+    return cosine_sim
+
+    # Make a function to get recommendations
 
 
-def get_recommendations(resort, cosine_sim=cosine_sim):
+def get_recommendations(resort, cosine_sim):
     # Convert resort to be in format
     resort = resort.lower()
     resort = resort.replace(" ", "-")
-
+    print(cosine_sim.sum())
     # Get the index of the movie that matches the title
     idx = indices[resort]
 
@@ -87,7 +131,7 @@ def get_recommendations(resort, cosine_sim=cosine_sim):
     return names
 
 
-def get_recommendations_list(resort, cosine_sim=cosine_sim):
+def get_recommendations_list(resort, cosine_sim):
     # Convert resort to be in format
     resort = resort.lower()
     resort = resort.replace(" ", "-")
@@ -125,6 +169,7 @@ def create_figure(current_feature_name, smalldata):
     p = figure(x_range=smallresorts, title=current_feature_name)
     p.vbar(x=smallresorts, top=values, width=0.9, fill_color="skyblue")
     p.xaxis.major_label_orientation = "vertical"
+    p.xaxis.major_label_text_font_size = "10pt"
     return p
 
 
@@ -149,18 +194,25 @@ def form_1():
         return render_template('skiform1.html')
     else:
         # request was a POST
-        resort = request.form['name_skiresort']
-        return redirect(url_for('indexplotter', resort=resort))
+
+        return redirect(url_for('indexplotter'))
 
 
 @app.route('/recommendations', methods=['GET', 'POST'])
 def indexplotter():
 
-    resort = request.args.get('resort')
-    # Get the resort data
-    smalldata = get_recommendations(resort)
-    listdata = get_recommendations_list(resort)
+    resort = request.args['name_skiresort']
+    price = request.args.get('price', False)
+    snow = request.args.get('snow', False)
+    apres = request.args.get('apres', False)
+    location = request.args.get('location', False)
 
+    cosinesim = get_cosinesim(df_norm, price, snow, apres, location)
+    print(cosinesim.sum)
+    # Get the resort data
+    smalldata = get_recommendations(resort, cosinesim)
+    listdata = get_recommendations_list(resort, cosinesim)
+    print(listdata)
     # Determine selected feature
     current_feature_name = request.args.get("feature_name")
     if current_feature_name == None:
@@ -171,8 +223,8 @@ def indexplotter():
 
     # Embed plot into HTML via Flask Render
     script, div = components(plot)
-    return render_template("plotter.html", script=script, div=div, resort=resort, current_feature_name=current_feature_name, feature_names=feature_names, listdata=listdata)
+    return render_template("plotter.html", script=script, div=div, price=price, snow=snow, apres=apres, location=location, resort=resort, cosinesim=cosinesim, df_norm=df_norm, current_feature_name=current_feature_name, feature_names=feature_names, listdata=listdata)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5421)
+    app.run(debug=True, port=5425)

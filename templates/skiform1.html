@@ -1,28 +1,57 @@
 {% extends "layout2.html" %}
 {% block content %}
-    <h1>Top 10 Ski Resorts<h1>
+
+    <h1>Find Your Top 10 Ski Resorts<h1>
         <p style="border: 1px solid black"> </p>
 <div class=page>
   <div class=metanav>
 
     <h5>
-      Please enter your favorite ski resort.
+      Please enter your favorite ski resort. </h5>
 
       <h6>
-    <form id='userinfoform_ski' method='post' action='/skiform' >
-      <p>
-        Ski Resort: <input type='text' name='name_skiresort' />
-      </p>
-      <p>
-    <input type='submit' value='Submit' />
-      </p>
+    <form id='userinfoform_ski' method='get' action='/recommendations' >
+          <p>
+            Ski Resort: <input type='text' name='name_skiresort' />
+          </p> </h6>
+
+          <h5>
+          Any priorities? Check them here. </h5>
+          <h6>
+            <div>
+            <input id="box1" type="checkbox" class="with-font" name = 'snow' value = "True"/>
+
+            <label for="box1">Snow and Terrain</label>
+            </div>
+        <div>
+            <input id="box2" type="checkbox" class="with-font" name = 'apres' value = "True"/>
+            <label for="box2">Apres Ski</label>
+        </div>
+        <div>
+            <input id="box3" type="checkbox" class="with-font" name = 'price' value = "True" />
+            <label for="box3">Cost</label>
+        </div>
+        <div>
+            <input id="box4" type="checkbox" class="with-font" name = 'location' value = "True"/>
+            <label for="box4">Location</label>
+        </div>
+        <div>
+
+
+
+          <p>
+        <input type='submit' value='Submit' />
+          </p>
+        </h6>
     </form>
-     </h6>
-    </h5>
+
+
 
 
 
   </div>
 </div>
+
+
 </html>
 {% endblock content  %}
