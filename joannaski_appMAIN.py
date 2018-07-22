@@ -103,10 +103,10 @@ def get_cosinesim(df_norm, price, snow, apres, location):
 
 
 def get_recommendations(resort, cosine_sim):
-    # Convert resort to be in format
+        # Convert resort to be in format
     resort = resort.lower()
     resort = resort.replace(" ", "-")
-    print(cosine_sim.sum())
+
     # Get the index of the movie that matches the title
     idx = indices[resort]
 
@@ -123,16 +123,20 @@ def get_recommendations(resort, cosine_sim):
     ski_indices = [i[0] for i in sim_scores]
 
     # the top 10 most similar movies
-    names = df.iloc[ski_indices]
+    new_df = df.iloc[ski_indices]
+    names = df['ResortName']
+    middlenames = names.str.title()
+    new_df['ResortName'] = middlenames.replace('-', ' ', regex=True)
+
 #     names = names.str.title()
 #     names = names.replace('-', ' ', regex=True)
 
     # Return the top 10 most similar movies
-    return names
+    return new_df
 
 
 def get_recommendations_list(resort, cosine_sim):
-    # Convert resort to be in format
+        # Convert resort to be in format
     resort = resort.lower()
     resort = resort.replace(" ", "-")
 
@@ -152,12 +156,17 @@ def get_recommendations_list(resort, cosine_sim):
     ski_indices = [i[0] for i in sim_scores]
 
     # the top 10 most similar movies
-    names = df_withnames.iloc[ski_indices, 0]
-    names = names.str.title()
-    names = names.replace('-', ' ', regex=True)
-    names = names.tolist()
+    new_df = df.iloc[ski_indices]
+    names = df['ResortName']
+    middlenames = names.str.title()
+    new_df['ResortName'] = middlenames.replace('-', ' ', regex=True)
+    new_df['Adult'] = new_df['Adult'].round(2)
+    newdic = new_df.T.to_dict().values()
+#     names = names.str.title()
+#     names = names.replace('-', ' ', regex=True)
 
-    return names
+    # Return the top 10 most similar movies
+    return newdic
 
 
 feature_names = ['Altitude', 'Ski_resort_size', 'Child', 'Youth', 'Easy', 'Intermediate', 'Difficult', 'Snowreliability', 'Variety', 'Food', 'Accommodations']
@@ -187,6 +196,10 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+@app.route("/insights")
+def insights():
+    return render_template('insights.html', title='About')
+
 
 @app.route('/skiform', methods=['GET', 'POST'])
 def form_1():
@@ -208,11 +221,9 @@ def indexplotter():
     location = request.args.get('location', False)
 
     cosinesim = get_cosinesim(df_norm, price, snow, apres, location)
-    print(cosinesim.sum)
     # Get the resort data
     smalldata = get_recommendations(resort, cosinesim)
     listdata = get_recommendations_list(resort, cosinesim)
-    print(listdata)
     # Determine selected feature
     current_feature_name = request.args.get("feature_name")
     if current_feature_name == None:
@@ -223,8 +234,8 @@ def indexplotter():
 
     # Embed plot into HTML via Flask Render
     script, div = components(plot)
-    return render_template("plotter.html", script=script, div=div, price=price, snow=snow, apres=apres, location=location, resort=resort, cosinesim=cosinesim, df_norm=df_norm, current_feature_name=current_feature_name, feature_names=feature_names, listdata=listdata)
+    return render_template("plotter.html", script=script, div=div, price=price, snow=snow, apres=apres, location=location, resort=resort, cosinesim=cosinesim, df_norm=df_norm, current_feature_name=current_feature_name, feature_names=feature_names, smalldata=smalldata, listdata=listdata)
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5425)
+    app.run(debug=True, port=5426)

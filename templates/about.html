@@ -1,20 +1,41 @@
-{% extends "layout.html" %}
+{% extends "layout2.html" %}
 {% block content %}
 
-    <h1>About Page</h1>
-            <p style="border: 1px solid black"> </p>
-            <h2>Find your ideal ski resort and ski pass </h2>
+    <h1>About</h1>
+            <p style="border: 1px solid black" length = "800"> </p>
+            <h2>Data Source </h2>
                 <p>
-                    This website does uses content-based filtering to match skiers/riders with resorts that would be the most similar to resorts that they know they like. The website pools together data about over 5,000 ski resorts. The data includes information about the snow quality, altitude, pricing, locations, apres ski etc
+                    The data used to complete this project was scraped from Skiresort.info.com
                 </p>
-    <img src="{{url_for('static', filename='ski_resort_price_altitude.png' )}}" width="500" height="400" align="middle" />
-                    <p>
-                    This plot demonstrates a correlation between the price, altitude and ski resort size.
-                </p>
-    <img src="{{url_for('static', filename='Plot1B.png' )}}" width="750" height="500" align="middle"/>
-                    <p>
-                    This plot demonstrates a correlation between the price, altitude and ski resort size.
-                </p>
+    <img src="{{url_for('static', filename='SkiInfo.png' )}}" width="800" height="160" align="middle" />
+    <h3>Ski Resort Details </h3>
+        <p>
+        The ski resort detail have basic information about each of the resorts including the terrain details and pricing.
+    </p>
+    <img src="{{url_for('static', filename='SkiDetails.png' )}}" width="650" height="500" align="middle"/>
+
+    <h3>Ratings </h3>
+            <p>
+        The website also provides ratings that have been put together by ski experts who have done onsite visits at each of the resorts. The categories included in the evaluation are ski-related and non ski-related.
+    </p>
+    <img src="{{url_for('static', filename='Ratings.png' )}}" width="750" height="350" align="middle"/>
+
+    <h3>Pipeline for Analysis </h3>
+                <p>
+        All the data was merged together and cleaned for further analysis.
+    </p>
+    <img src="{{url_for('static', filename='Pipeline.png' )}}" width="600" height="300" align="middle"/>
+
+     <h3>Content-Based Filtering </h3>
+        <p>
+        Content-based filtering determines the cosine similarity scores of all of the ski resorts. Upon receiving information about a resort that a use likes, the pairwise similarity scores are calculated and the top 10 are reported.
+    </p>
+    <img src="{{url_for('static', filename='ContentBased1.jpeg' )}}"  align="middle"/>
+    <h3>Collaborative Filtering </h3>
+            <p>
+        A collaborative filtering approach relies on user reviews to make recommendations. The model learns what resorts users are likely to enjoy given that they like similar resorts to other users. In the future, I plan to build a database to be able to collect user reviews and improve recommendations further.
+    </p>
+    <img src="{{url_for('static', filename='Userbasedfiltering1.jpeg' )}}"  align="middle"/>
 
 
 {% endblock content  %}

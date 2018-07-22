@@ -10,17 +10,13 @@
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
-    {% if title %}
-        <title>Ski Blog - {{ title }}</title>
-    {% else %}
-        <title>Ski Blog</title>
-    {% endif %}
+
 </head>
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="/">Ski Blog</a>
+
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -28,6 +24,7 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
               <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+              <a class="nav-item nav-link" href="{{ url_for('insights') }}">Insights</a>
               <a class="nav-item nav-link" href="{{ url_for('form_1') }}">Top 10 Ski Resorts</a>
             </div>
           </div>
@@ -50,8 +47,7 @@
         </div>
         <div class="col-md-4">
           <div class="content-section">
-            <h3>Ski Recommenders</h3>
-            <p style="border: 1px solid black"> </p>
+            <h3>Get Started Here:</h3>
             <p class='text-muted'>Select a link below.
               <ul class="list-group">
                 <a class="nav-item nav-link" href="{{ url_for('form_1') }}">Top 10 Ski Resorts</a>

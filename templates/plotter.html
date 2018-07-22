@@ -18,9 +18,23 @@
 <p style="border: 1px solid black">
 <H3>Here are your matches!</H3>
 <div>
-    {% for element in listdata %}
-          <p> - {{ element }} </p>
-      {% endfor %}
+
+    <table border=1 cellpadding=7>
+            <tr>
+                <th>Resort Name</th>
+                <th>Country</th>
+                <th>Price (USD)</th>
+
+            </tr>
+            {% for obj in listdata %}
+            <tr>
+                <td>{{ obj.ResortName }}</td>
+                <td>{{ obj.Country }}</td>
+                <td>${{ obj.Adult }}</td>
+            </tr>
+            {% endfor %}
+  </table>
+
 </div>
 </p>
 <div >

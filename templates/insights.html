@@ -1,0 +1,17 @@
+{% extends "layout2.html" %}
+{% block content %}
+
+    <h1>Insights About the Data</h1>
+            <p style="border: 1px solid black"> </p>
+            <h3>Finding Correlation Across the Features </h3>
+                <p>
+                    This website does uses content-based filtering to match skiers/riders with resorts that would be the most similar to resorts that they know they like. The website pools together data about over 5,300 ski resorts. The data includes information about the snow quality, altitude, pricing, locations, apres ski etc. This plot demonstrates a correlation between the price, altitude and ski resort size.
+                </p>
+    <img src="{{url_for('static', filename='ski_resort_price_altitude1.png' )}}" width="500" height="400" align="middle" />
+                <p>
+                    In this graphic, we show the distribution of where the majority of the ski resorts are in the world and the outline of the countried give the snow quality.
+                </p>
+    <img src="{{url_for('static', filename='Plot1B1.png' )}}" width="750" height="500" align="middle"/>
+
+
+{% endblock content  %}
