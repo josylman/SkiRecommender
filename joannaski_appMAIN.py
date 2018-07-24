@@ -10,6 +10,7 @@ from sklearn.feature_extraction import DictVectorizer
 import json
 #from bokeh.plotting import figure
 #from bokeh.embed import components
+#adding to be able to push
 import numpy as np
 import os
 
