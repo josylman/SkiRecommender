@@ -19,7 +19,7 @@ app = Flask(__name__)
 # obtain the Data
 # Run the model
 
-df = pd.read_csv('/Users/joannasylman//Desktop/DataIncubatorPrep/Flask_Ski/static/cleanskidata.txt', error_bad_lines=False)
+df = pd.read_csv('static/cleanskidata.txt', error_bad_lines=False)
 
 
 class CenteringTransformer(sk.base.BaseEstimator, sk.base.TransformerMixin):
