@@ -6,4 +6,5 @@ simplejson
 requests
 scikit-learn
 numpy
+nomkl
 
