@@ -10,7 +10,6 @@ from sklearn.feature_extraction import DictVectorizer
 import json
 #from bokeh.plotting import figure
 #from bokeh.embed import components
-#adding to be able to push
 import numpy as np
 import os
 
@@ -241,5 +240,4 @@ def indexplotter():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 33557))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(debug=True, port=5426)
