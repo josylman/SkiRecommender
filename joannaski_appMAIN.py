@@ -8,18 +8,18 @@ from scipy import sparse
 from sklearn import base
 from sklearn.feature_extraction import DictVectorizer
 import json
-from bokeh.plotting import figure
-from bokeh.embed import components
+#from bokeh.plotting import figure
+#from bokeh.embed import components
 import numpy as np
 import os
-from forms import RegistrationForm, LoginForm
+
 
 
 app = Flask(__name__)
 # obtain the Data
 # Run the model
 
-df = pd.read_csv('/Users/joannasylman//Desktop/DataIncubatorPrep/MilestoneProject/cleanskidata.txt', error_bad_lines=False)
+df = pd.read_csv('/Users/joannasylman//Desktop/DataIncubatorPrep/Flask_Ski/static/cleanskidata.txt', error_bad_lines=False)
 
 
 class CenteringTransformer(sk.base.BaseEstimator, sk.base.TransformerMixin):
@@ -231,7 +231,8 @@ def indexplotter():
     #current_feature_name = request.args.get("feature_name")
     # if current_feature_name == None:
     #    current_feature_name = 'Adult'
-
+import sys
+print sys.version
     # Create the plot
     #plot = create_figure(current_feature_name, smalldata)
 

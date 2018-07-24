@@ -1,0 +1,9 @@
+pandas
+flask
+jinja2
+pip
+simplejson
+requests
+scikit-learn
+numpy
+
