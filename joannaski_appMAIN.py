@@ -127,12 +127,14 @@ def get_recommendations(resort, cosine_sim):
     names = df['ResortName']
     middlenames = names.str.title()
     new_df['ResortName'] = middlenames.replace('-', ' ', regex=True)
+    new_df['Adult'] = round(new_df['Adult'], 2)
+    newdic = new_df.to_dict(orient='records')
 
 #     names = names.str.title()
 #     names = names.replace('-', ' ', regex=True)
 
     # Return the top 10 most similar movies
-    return new_df
+    return newdic
 
 
 def get_recommendations_list(resort, cosine_sim):
@@ -196,6 +198,7 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+
 @app.route("/insights")
 def insights():
     return render_template('insights.html', title='About')
@@ -225,16 +228,16 @@ def indexplotter():
     smalldata = get_recommendations(resort, cosinesim)
     listdata = get_recommendations_list(resort, cosinesim)
     # Determine selected feature
-    current_feature_name = request.args.get("feature_name")
-    if current_feature_name == None:
-        current_feature_name = 'Adult'
+    #current_feature_name = request.args.get("feature_name")
+    # if current_feature_name == None:
+    #    current_feature_name = 'Adult'
 
     # Create the plot
-    plot = create_figure(current_feature_name, smalldata)
+    #plot = create_figure(current_feature_name, smalldata)
 
     # Embed plot into HTML via Flask Render
-    script, div = components(plot)
-    return render_template("plotter.html", script=script, div=div, price=price, snow=snow, apres=apres, location=location, resort=resort, cosinesim=cosinesim, df_norm=df_norm, current_feature_name=current_feature_name, feature_names=feature_names, smalldata=smalldata, listdata=listdata)
+    #script, div = components(plot)
+    return render_template("googlechart.html", price=price, snow=snow, apres=apres, location=location, resort=resort, cosinesim=cosinesim, df_norm=df_norm, feature_names=feature_names, smalldata=smalldata, listdata=listdata)
 
 
 if __name__ == '__main__':

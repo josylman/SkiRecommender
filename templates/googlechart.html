@@ -1,0 +1,374 @@
+{% extends "layout2.html" %}
+{% block content %}
+<head>
+<link
+    href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.16.min.css"
+    rel="stylesheet" type="text/css">
+<link
+    href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.16.min.css"
+    rel="stylesheet" type="text/css">
+
+<script src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.16.min.js"></script>
+<script src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.16.min.js"></script>
+
+</head>
+<body>
+
+<H1>Recommended Ski Resorts</H1>
+<p style="border: 1px solid black">
+<H3>Here are your matches!</H3>
+<div>
+
+    <table border=1 cellpadding=7>
+            <tr>
+                <th>Resort Name</th>
+                <th>Country</th>
+                <th>Price (USD)</th>
+
+            </tr>
+            {% for obj in listdata %}
+            <tr>
+                <td>{{ obj.ResortName }}</td>
+                <td>{{ obj.Country }}</td>
+                <td>${{ obj.Adult }}</td>
+            </tr>
+            {% endfor %}
+  </table>
+
+</div>
+</p>
+<div >
+    <p style="border: 1px solid black">
+    <H3>Features of your matches:</H3>
+
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {packages: ['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawBasic);
+      var option = {{smalldata|tojson}};
+
+
+      console.log(option)
+
+      var names = [];
+      var altitudes = [];
+      var adults = [];
+      var resortsizes = [];
+      var childs = [];
+      var easys = [];
+      var intermediates = [];
+      var difficults = [];
+      var snowreliabilities = [];
+      var varieties = [];
+      var foods = [];
+      var accomodations = [];
+
+
+      for (var i = 0; i < option.length; i++) {
+          names.push(option[i].ResortName);
+          altitudes.push(option[i].Altitude);
+          adults.push(option[i].Adult);
+          resortsizes.push(option[i].Ski_resort_size);
+          childs.push(option[i].Child);
+          easys.push(option[i].Easy);
+          intermediates.push(option[i].Intermediate);
+          difficults.push(option[i].Difficult);
+          snowreliabilities.push(option[i].Snowreliability);
+          varieties.push(option[i].Variety);
+          foods.push(option[i].Food);
+          accomodations.push(option[i].Accommodations);
+      }
+      console.log(names, altitudes)
+
+      //var names = [];
+      //for (i = 0; i < option.length; i++) {
+      //    text += cars[i] + "<br>";
+      //}
+      //var names = [for (item in option) item.ResortName];
+      //var altitudes = [for (item in option) item.Altitude];
+      //var adults = [for (item in option) item.Adult];
+      //console.log(names)
+
+      function drawBasic() {
+        var AltitudeData = google.visualization.arrayToDataTable([
+                      ['Resort', 'Altitude (m)'],
+                      [names[0], altitudes[0]],
+                      [names[1], altitudes[1]],
+                      [names[2], altitudes[2]],
+                      [names[3], altitudes[3]],
+                      [names[4], altitudes[4]],
+                      [names[5], altitudes[5]],
+                      [names[6], altitudes[6]],
+                      [names[7], altitudes[7]],
+                      [names[8], altitudes[8]],
+                      [names[9], altitudes[9]]
+                    ]);
+
+        var AdultData = google.visualization.arrayToDataTable([
+                      ['Resort', 'Adult Price (USD)'],
+                      [names[0], adults[0]],
+                      [names[1], adults[1]],
+                      [names[2], adults[2]],
+                      [names[3], adults[3]],
+                      [names[4], adults[4]],
+                      [names[5], adults[5]],
+                      [names[6], adults[6]],
+                      [names[7], adults[7]],
+                      [names[8], adults[8]],
+                      [names[9], adults[9]]
+                    ]);
+
+        var SizeData = google.visualization.arrayToDataTable([
+              ['Resort', 'Ski Resort Size ('],
+              [names[0], resortsizes[0]],
+              [names[1], resortsizes[1]],
+              [names[2], resortsizes[2]],
+              [names[3], resortsizes[3]],
+              [names[4], resortsizes[4]],
+              [names[5], resortsizes[5]],
+              [names[6], resortsizes[6]],
+              [names[7], resortsizes[7]],
+              [names[8], resortsizes[8]],
+              [names[9], resortsizes[9]]
+            ]);
+
+        var ChildData = google.visualization.arrayToDataTable([
+              ['Resort', 'Child Price (USD)'],
+              [names[0], childs[0]],
+              [names[1], childs[1]],
+              [names[2], childs[2]],
+              [names[3], childs[3]],
+              [names[4], childs[4]],
+              [names[5], childs[5]],
+              [names[6], childs[6]],
+              [names[7], childs[7]],
+              [names[8], childs[8]],
+              [names[9], childs[9]]
+            ]);
+
+        var EasyData = google.visualization.arrayToDataTable([
+                      ['Resort', '% Easy Trails'],
+                      [names[0], easys[0]],
+                      [names[1], easys[1]],
+                      [names[2], easys[2]],
+                      [names[3], easys[3]],
+                      [names[4], easys[4]],
+                      [names[5], easys[5]],
+                      [names[6], easys[6]],
+                      [names[7], easys[7]],
+                      [names[8], easys[8]],
+                      [names[9], easys[9]]
+                    ]);
+
+        var IntermediateData = google.visualization.arrayToDataTable([
+              ['Resort', '% Intermediate Trails'],
+              [names[0], intermediates[0]],
+              [names[1], intermediates[1]],
+              [names[2], intermediates[2]],
+              [names[3], intermediates[3]],
+              [names[4], intermediates[4]],
+              [names[5], intermediates[5]],
+              [names[6], intermediates[6]],
+              [names[7], intermediates[7]],
+              [names[8], intermediates[8]],
+              [names[9], intermediates[9]]
+            ]);
+        var DifficultData = google.visualization.arrayToDataTable([
+              ['Resort', '% Difficult Trails'],
+              [names[0], difficults[0]],
+              [names[1], difficults[1]],
+              [names[2], difficults[2]],
+              [names[3], difficults[3]],
+              [names[4], difficults[4]],
+              [names[5], difficults[5]],
+              [names[6], difficults[6]],
+              [names[7], difficults[7]],
+              [names[8], difficults[8]],
+              [names[9], difficults[9]]
+            ]);
+
+        var SnowreliabilityData = google.visualization.arrayToDataTable([
+                      ['Resort', 'Snow Reliability (Rating)'],
+                      [names[0], snowreliabilities[0]],
+                      [names[1], snowreliabilities[1]],
+                      [names[2], snowreliabilities[2]],
+                      [names[3], snowreliabilities[3]],
+                      [names[4], snowreliabilities[4]],
+                      [names[5], snowreliabilities[5]],
+                      [names[6], snowreliabilities[6]],
+                      [names[7], snowreliabilities[7]],
+                      [names[8], snowreliabilities[8]],
+                      [names[9], snowreliabilities[9]]
+                    ]);
+
+        var VarietyData = google.visualization.arrayToDataTable([
+              ['Resort', 'Variety (Rating)'],
+              [names[0], varieties[0]],
+              [names[1], varieties[1]],
+              [names[2], varieties[2]],
+              [names[3], varieties[3]],
+              [names[4], varieties[4]],
+              [names[5], varieties[5]],
+              [names[6], varieties[6]],
+              [names[7], varieties[7]],
+              [names[8], varieties[8]],
+              [names[9], varieties[9]]
+            ]);
+        var FoodsData = google.visualization.arrayToDataTable([
+              ['Resort', 'Food (Rating)'],
+              [names[0], foods[0]],
+              [names[1], foods[1]],
+              [names[2], foods[2]],
+              [names[3], foods[3]],
+              [names[4], foods[4]],
+              [names[5], foods[5]],
+              [names[6], foods[6]],
+              [names[7], foods[7]],
+              [names[8], foods[8]],
+              [names[9], foods[9]]
+            ]);
+
+        var AccomodationsData = google.visualization.arrayToDataTable([
+                      ['Resort', 'Accomodations (Rating)'],
+                      [names[0], accomodations[0]],
+                      [names[1], accomodations[1]],
+                      [names[2], accomodations[2]],
+                      [names[3], accomodations[3]],
+                      [names[4], accomodations[4]],
+                      [names[5], accomodations[5]],
+                      [names[6], accomodations[6]],
+                      [names[7], accomodations[7]],
+                      [names[8], accomodations[8]],
+                      [names[9], accomodations[9]]
+                    ]);
+
+
+        var select = document.getElementById('select-menu')
+
+        var options = {
+
+          title: 'Features of Each of the Ski Resorts',
+          backgroundColor: '#FAFAFA',
+          chartArea: {
+            top: 55,
+            height: '20%',
+          },
+          fontSize: 25,
+          colors: ['skyblue'],
+          vAxis: {
+           title: 'Altitude (m)',
+            // format: 'percent',
+            titleTextStyle: {
+              fontSize: 18
+            },
+            textStyle: {
+              fontSize: 18
+            },
+            // gridlines: {
+            //   color: '#442C2E',
+            // },
+            // baselineColor: '#442C2E',
+          },
+          hAxis: {
+            // Slanted text not supported yet for Material versions
+            slantedText: true,
+            slantedTextAngle: 90,
+            titleTextStyle: {
+              fontSize: 18
+            },
+            textStyle: {
+              fontSize: 18
+            },
+          },
+          legend: {
+            position: 'none'
+          }
+        };
+
+        var chart = new google.visualization.ColumnChart(
+            document.getElementById('chart_div'));
+
+            chart.draw(AltitudeData, options);
+
+
+        select.onchange = function(e) {
+          if (e.target.value === "Altitude") {
+            options.title = 'Altitudes of the Ski Resorts';
+            options.vAxis.title = ' Altitude (m)';
+            chart.draw(AltitudeData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Adult') {
+            options.title = 'Adult Ticket Pricing of the Resorts';
+            options.vAxis.title = 'Price (USD)';
+            chart.draw(AdultData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Ski_resort_size') {
+            options.title = 'Sizes of the Resorts';
+            options.vAxis.title = 'Size (Rating)';
+            chart.draw(SizeData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Child') {
+            options.title = 'Child Ticket Pricing of the Resorts';
+            options.vAxis.title = 'Price (USD)';
+            chart.draw(ChildData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Easy') {
+            options.title = 'Easy Trails at the Resorts';
+            options.vAxis.title = '% Easy Trails';
+            chart.draw(EasyData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === "Intermediate") {
+            options.title = 'Intermediate Trails at the Resorts';
+            options.vAxis.title = '% Intermediate Trails'
+            chart.draw(IntermediateData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Difficult') {
+            options.title = 'Difficult Trails at the Resorts';
+            options.vAxis.title = '% Difficult Trails';
+            chart.draw(DifficultData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Snowreliability') {
+            options.title = 'Reliability of Snow at the Resorts';
+            options.vAxis.title = 'Snow Reliability (Rating)';
+            chart.draw(SnowreliabilityData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Variety') {
+            options.title = 'Variety of Terrain at Resorts';
+            options.vAxis.title = 'Variety (Rating)';
+            chart.draw(VarietyData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Food') {
+            options.title = 'Food Quality the Resorts';
+            options.vAxis.title = 'Food (Rating)';
+            chart.draw(FoodsData, google.charts.Bar.convertOptions(options));
+          };
+          if (e.target.value === 'Accomodations') {
+            options.title = 'Accomodations at the Resorts';
+            options.vAxis.title = 'Accomodations (Rating)';
+            chart.draw(AccomodationsData, google.charts.Bar.convertOptions(options));
+          };
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <div id="select-menu">
+      <select>
+       <option value="Altitude" selected>Altitude</option>
+       <option value="Ski_resort_size">Ski Resort Size</option>
+       <option value="Easy">Easy Runs</option>
+       <option value="Intermediate">Intermediate Runs</option>
+       <option value="Difficult">Difficult Runs</option>
+       <option value="Child">Child Price</option>
+       <option value="Adult">Adult Price</option>
+       <option value="Snowreliability">Snow Reliability</option>
+       <option value="Variety">Variety</option>
+       <option value="Food">Food</option>
+       <option value="Accomodations">Accomodations</option>
+      </select>
+    </div>
+    <div id="chart_div" style="width: 800px; height: 1500px;"></div>
+  </body>
+</html>
+{% endblock content  %}
