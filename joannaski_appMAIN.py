@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
 import requests
-from pandas import DataFrame
 import pandas as pd
 import sklearn as sk
 from sklearn.metrics.pairwise import cosine_similarity
