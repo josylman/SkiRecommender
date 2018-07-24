@@ -240,4 +240,4 @@ def indexplotter():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5426)
+    app.run()
