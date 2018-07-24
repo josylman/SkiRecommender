@@ -231,8 +231,6 @@ def indexplotter():
     #current_feature_name = request.args.get("feature_name")
     # if current_feature_name == None:
     #    current_feature_name = 'Adult'
-import sys
-print sys.version
     # Create the plot
     #plot = create_figure(current_feature_name, smalldata)
 
