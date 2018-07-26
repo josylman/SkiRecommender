@@ -1,3 +1,6 @@
+
+
+
 {% extends "layout2.html" %}
 {% block content %}
 
@@ -18,9 +21,9 @@
             <p>
         The website also provides ratings that have been put together by ski experts who have done onsite visits at each of the resorts. The categories included in the evaluation are ski-related and non ski-related.
     </p>
-    <img src="{{url_for('static', filename='Ratings.png' )}}" width="750" height="350" align="middle"/>
+    <img src="{{url_for('static', filename='Ratings.png' )}}" width="800" height="350" align="middle"/>
 
-    <h3>Pipeline for Analysis </h3>
+    <h3>(Half)Pipeline for Analysis </h3>
                 <p>
         All the data was merged together and cleaned for further analysis.
     </p>
@@ -35,7 +38,12 @@
             <p>
         A collaborative filtering approach relies on user reviews to make recommendations. The model learns what resorts users are likely to enjoy given that they like similar resorts to other users. In the future, I plan to build a database to be able to collect user reviews and improve recommendations further.
     </p>
-    <img src="{{url_for('static', filename='Userbasedfiltering1.jpeg' )}}"  align="middle"/>
+    <img src="{{url_for('static', filename='Userbasedfiltering1.jpeg' )}}" align="middle"/>
+    <h3>About Me</h3>
+            <p>
+         I have been working in the healthcare field for the last 9 years and am passionate about using data to solve real world problems. I am excited to share my first dive into web scraping, web development, and recommendation engines in my RideSki Retriever application. Should you have any questions or recommendations, please contact me at joanna.lee.sylman@mg.thedataincubator.com.
+    </p>
+    <img src="{{url_for('static', filename='jojophoto.png' )}}" width="300" height="400" align="middle"/>
 
 
 {% endblock content  %}

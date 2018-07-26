@@ -11,7 +11,8 @@ import json
 #from bokeh.embed import components
 import numpy as np
 import os
-os.getcwd()
+
+
 
 app = Flask(__name__)
 # obtain the Data
@@ -47,7 +48,7 @@ class ColumnWeightTransformer(base.BaseEstimator, base.TransformerMixin):
     def transform(self, X):
         X = X.copy()
         for name in self.col_names:
-            X.loc[:, name] *= 100
+            X.loc[:, name] *= 500
 
         return X
 
@@ -216,6 +217,8 @@ def form_1():
 def indexplotter():
 
     resort = request.args['name_skiresort']
+    if resort == '':
+        resort = 'Vail'
     price = request.args.get('price', False)
     snow = request.args.get('snow', False)
     apres = request.args.get('apres', False)
@@ -238,4 +241,4 @@ def indexplotter():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5426)
+    app.run(debug=True, port=5427)

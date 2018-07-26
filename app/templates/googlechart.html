@@ -1,5 +1,7 @@
 {% extends "layout2.html" %}
 {% block content %}
+
+
 <head>
 <link
     href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.16.min.css"
@@ -252,7 +254,7 @@
           backgroundColor: '#FAFAFA',
           chartArea: {
             top: 55,
-            height: '20%',
+            height: '30%',
           },
           fontSize: 25,
           colors: ['skyblue'],
@@ -368,7 +370,38 @@
        <option value="Accomodations">Accomodations</option>
       </select>
     </div>
-    <div id="chart_div" style="width: 800px; height: 1500px;"></div>
+    <div id="chart_div" style="width: 800px; height: 600px;"></div>
   </body>
+  <form id='userinfoform_ski' method='get' action='/recommendations' >
+  <input type="hidden" id="postId" name="name_skiresort" value="{{resort}}">
+          <h5>
+          Any priorities? Check them here. </h5>
+          <h6>
+            <div>
+            <input id="box1" type="checkbox" class="with-font" name = 'snow' value = "True"/>
+
+            <label for="box1">Snow and Terrain</label>
+            </div>
+        <div>
+            <input id="box2" type="checkbox" class="with-font" name = 'apres' value = "True"/>
+            <label for="box2">Apres Ski</label>
+        </div>
+        <div>
+            <input id="box3" type="checkbox" class="with-font" name = 'price' value = "True" />
+            <label for="box3">Cost</label>
+        </div>
+        <div>
+            <input id="box4" type="checkbox" class="with-font" name = 'location' value = "True"/>
+            <label for="box4">Location</label>
+        </div>
+        <div>
+
+
+
+          <p>
+        <input type='submit' value='Submit' />
+          </p>
+        </h6>
+    </form>
 </html>
 {% endblock content  %}
