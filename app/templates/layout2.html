@@ -14,10 +14,8 @@
     body {
         background-image: url( '/static/img/skiimage.jpg' );
     }
-    .collapse navbar-collapse {
-    background-color: white;
-    }
-    div {
+
+    .container-fluid {
     background-color: white;
     }
 
@@ -35,10 +33,10 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('home') }}"><font color="black">Home</font></a>
-              <a class="nav-item nav-link" href="{{ url_for('about') }}"><font color="black">About</font></a>
-              <a class="nav-item nav-link" href="{{ url_for('insights') }}"><font color="black">Insights</font></a>
-              <a class="nav-item nav-link" href="{{ url_for('form_1') }}"><font color="black">Recommender</font></a>
+              <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+              <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
+              <a class="nav-item nav-link" href="{{ url_for('insights') }}">Insights</a>
+              <a class="nav-item nav-link" href="{{ url_for('form_1') }}">Recommender</a>
             </div>
           </div>
         </div>
@@ -47,7 +45,7 @@
     <main role="main" class="container">
       <div class="row">
     <div class="container-fluid">
-    <div id="page-content" class="col-lg-10 offset-md-1 pt-5 px-4 shadow-lg">
+    <div id="page-content" class="col-lg-11 offset-md-0.5 ">
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}

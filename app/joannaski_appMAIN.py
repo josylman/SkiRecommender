@@ -75,7 +75,6 @@ allresorts1 = allresorts1.tolist()
 # Make a function to get cosine similarities
 def get_cosinesim(df_norm, price, snow, apres, location):
     # All possible variables to be weighted
-    print(location)
     country_var = [col for col in df_norm if col.startswith('Country_')]
     apres_var = ['Food', 'Accommodations']
     price_var = ['Adult']
@@ -221,7 +220,6 @@ def indexplotter():
 
     resort = request.args['name_skiresort']
 
-    print(allresorts1)
     if resort == '' or resort not in allresorts1:
         resort = 'Vail'
     price = request.args.get('price', False)
