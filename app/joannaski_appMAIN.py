@@ -67,7 +67,10 @@ df_norm = ct.fit_transform(df_removal)
 
 # Construct reverse map of indices and ski resort names
 indices = pd.Series(df.index, index=df['ResortName']).drop_duplicates()
-
+allresorts = df["ResortName"]
+middlenames = allresorts.str.title()
+allresorts1 = middlenames.replace('-', ' ', regex=True)
+allresorts1 = allresorts1.tolist()
 
 # Make a function to get cosine similarities
 def get_cosinesim(df_norm, price, snow, apres, location):
@@ -217,7 +220,9 @@ def form_1():
 def indexplotter():
 
     resort = request.args['name_skiresort']
-    if resort == '':
+
+    print(allresorts1)
+    if resort == '' or resort not in allresorts1:
         resort = 'Vail'
     price = request.args.get('price', False)
     snow = request.args.get('snow', False)
